@@ -1,15 +1,15 @@
 # encoding: utf-8
 import StringIO
 
-from libs.des import feistel_s
-from libs.keyschedule import key_schedule_s
+from libs.des import feistel_s, feistel_ba
+from libs.keyschedule import key_schedule_s, key_schedule_ba
 from libs.misc import len_fp, pre_process_raw, key_pre_process_func, padding
 
 
 def encrypt_fp(secret_key, plaintext_fp, cipher_fp):
     key = pre_process_raw(secret_key,
                           func=key_pre_process_func)
-    keys = key_schedule_s(key)
+    keys = key_schedule_ba(key)
 
     length = len_fp(plaintext_fp)
     while True:
@@ -19,9 +19,7 @@ def encrypt_fp(secret_key, plaintext_fp, cipher_fp):
         if block_len < 8:
             block += padding(block_len)
             pos += 8 - block_len
-        cipher_fp.write(''.join(map(lambda x: chr(int(x, base=2)),
-                                    feistel_s(pre_process_raw(block),
-                                              keys))))
+        cipher_fp.write(feistel_ba(bytearray(block), keys))
         if pos > length:
             break
 
@@ -31,16 +29,14 @@ def encrypt_fp(secret_key, plaintext_fp, cipher_fp):
 def decrypt_fp(secret_key, cipher_fp, plaintext_fp):
     key = pre_process_raw(secret_key,
                           func=key_pre_process_func)
-    keys = key_schedule_s(key)[::-1]
+    keys = key_schedule_ba(key)[::-1]
 
     length = len_fp(cipher_fp)
     while True:
         block = cipher_fp.read(8)
-        plaintext_block = ''.join(map(lambda x: chr(int(x, base=2)),
-                                      feistel_s(pre_process_raw(block),
-                                                keys)))
+        plaintext_block = feistel_ba(bytearray(block), keys)
         if cipher_fp.tell() == length:
-            plaintext_block = plaintext_block[:-ord(plaintext_block[-1])]
+            plaintext_block = plaintext_block[:-plaintext_block[-1]]
             plaintext_fp.write(plaintext_block)
             break
 
@@ -65,6 +61,8 @@ def decrypt(secret_key, cipher):
 
 
 if __name__ == '__main__':
+    print encrypt('\x01\x23\x34\x56\x78\x9a\xbc\xde', 'panzerkampfwagen ii')
+    print decrypt('\x01\x23\x34\x56\x78\x9a\xbc\xde', encrypt('\x01\x23\x34\x56\x78\x9a\xbc\xde', 'panzerkampfwagen ii'))
     pass
 
 

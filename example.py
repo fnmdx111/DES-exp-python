@@ -23,6 +23,6 @@ def test_():
 
 cProfile.run('test_()', 'decrypt_prof')
 
-pstats.Stats('encrypt_prof').strip_dirs().sort_stats('ncalls').print_stats()
-pstats.Stats('decrypt_prof').strip_dirs().sort_stats('ncalls').print_stats()
+pstats.Stats('encrypt_prof').strip_dirs().sort_stats('calls').print_stats()
+pstats.Stats('decrypt_prof').strip_dirs().sort_stats('calls').print_stats()
 

@@ -1,5 +1,5 @@
 # encoding: utf-8
-from libs.misc import map_
+from libs.misc import map_, take
 
 
 perm2_table = [14, 17, 11, 24, 1, 5, 3, 28,
@@ -61,4 +61,27 @@ def key_schedule_s(key):
 
     return keys
 
+
+def key_schedule_ba(key):
+    c, d = perm1_s(key)
+
+    keys = []
+    for i in range(16):
+        rot_f = rotate_table_s[i]
+        c = rot_f(c)
+        d = rot_f(d)
+
+        keys.append(bytearray(map(lambda i: int(i, base=2), take(perm2_s(c + d)))))
+
+    return keys
+
+
+
+if __name__ == '__main__':
+    keys = key_schedule_ba(['00110001', '00110010', '00110011', '00110100',
+                          '00110101', '00110110', '00110111', '00111000'])
+    for key in keys:
+        for i in key:
+            print '{0:08b}'.format(i),
+        print
 
