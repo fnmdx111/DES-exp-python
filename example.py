@@ -27,6 +27,8 @@ def test_():
 # pstats.Stats('encrypt_prof').strip_dirs().sort_stats('calls').print_stats()
 # pstats.Stats('decrypt_prof').strip_dirs().sort_stats('calls').print_stats()
 
-print timeit.timeit('test()', setup='from example import test; from main import encrypt_fp', number=5)
-print timeit.timeit('test_()', setup='from example import test_; from main import decrypt_fp', number=5)
+# print timeit.timeit('test()', setup='from example import test; from main import encrypt_fp', number=5)
+# print timeit.timeit('test_()', setup='from example import test_; from main import decrypt_fp', number=5)
+
+test()
 
