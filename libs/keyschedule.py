@@ -10,18 +10,6 @@ perm2_table = [14, 17, 11, 24, 1, 5, 3, 28,
                34, 53, 46, 42, 50, 36, 29, 32]
 
 
-def rotate_left(x, n):
-    mask = reduce(lambda acc, i: (acc << 1) | i,
-                  map(int, '1' * n + '0' * (28 - n)),
-                  0)
-    return 0xfffffff & (x << n) | (mask & x) >> (28 - n)
-
-
-rot1 = lambda x: 0xfffffff & (x << 1) | (x & 0x8000000) >> 27
-rot2 = lambda x: 0xfffffff & (x << 2) | (x & 0xc000000) >> 26
-rotate_table = [rot1] * 2 + [rot2] * 6 + [rot1] + [rot2] * 6 + [rot1]
-
-
 rot1_s = lambda x: x[1:] + x[0]
 rot2_s = lambda x: x[2:] + x[:2]
 rotate_table_s = [rot1_s] * 2 + [rot2_s] * 6 + [rot1_s] + [rot2_s] * 6 + [rot1_s]
@@ -46,20 +34,6 @@ def perm2_s(k):
     '010100000010110010101100010101110010101011000010'
     """
     return ''.join(map_(k, table=perm2_table))
-
-
-def key_schedule_s(key):
-    c, d = perm1_s(key)
-
-    keys = []
-    for i in range(16):
-        rot_f = rotate_table_s[i]
-        c = rot_f(c)
-        d = rot_f(d)
-
-        keys.append(perm2_s(c + d))
-
-    return keys
 
 
 def key_schedule_ba(key):

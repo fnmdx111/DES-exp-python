@@ -1,8 +1,8 @@
 # encoding: utf-8
 import StringIO
 
-from libs.des import feistel_s, feistel_ba
-from libs.keyschedule import key_schedule_s, key_schedule_ba
+from libs.des import feistel_ba
+from libs.keyschedule import key_schedule_ba
 from libs.misc import len_fp, pre_process_raw, key_pre_process_func, padding
 
 

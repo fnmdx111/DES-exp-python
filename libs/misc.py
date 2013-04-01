@@ -1,6 +1,6 @@
 import os
 import operator
-from libs.tables import xor_s_d, init_perm_table
+from libs.tables import init_perm_table
 
 
 def take(it, by=8):
@@ -15,14 +15,6 @@ def take(it, by=8):
             s = len(it)
         yield it[:s]
         it = it[s:]
-
-
-def xor_s(x, y):
-    """
-    >>> xor_s('11100100', '10010001')
-    ['0', '1', '1', '1', '0', '1', '0', '1']
-    """
-    return [xor_s_d[i, j] for i, j in zip(x, y)]
 
 
 def xor_ba(x, y):
