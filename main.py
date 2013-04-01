@@ -1,9 +1,9 @@
 # encoding: utf-8
 import StringIO
 
-from des import feistel_s
-from keyschedule import key_schedule_s
-from misc import len_fp, pre_process_raw, key_pre_process_func, padding
+from libs.des import feistel_s
+from libs.keyschedule import key_schedule_s
+from libs.misc import len_fp, pre_process_raw, key_pre_process_func, padding
 
 
 def encrypt_fp(secret_key, plaintext_fp, cipher_fp):

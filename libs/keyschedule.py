@@ -1,5 +1,5 @@
 # encoding: utf-8
-from misc import map_
+from libs.misc import map_
 
 
 perm2_table = [14, 17, 11, 24, 1, 5, 3, 28,

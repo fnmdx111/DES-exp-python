@@ -1,5 +1,5 @@
 import os
-from tables import xor_s_d, init_perm_table
+from libs.tables import xor_s_d, init_perm_table
 
 
 def take(it, by=8):

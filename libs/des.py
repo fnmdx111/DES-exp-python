@@ -1,8 +1,8 @@
 # encoding: utf-8
 
-from keyschedule import key_schedule_s
-from tables import expansion_table, sbox, b2i_d, i2b_d, sbox_perm_table, init_perm_table, inv_init_perm_table
-from misc import take, map_, xor_s
+from libs.keyschedule import key_schedule_s
+from libs.tables import expansion_table, sbox, b2i_d, i2b_d, sbox_perm_table, init_perm_table, inv_init_perm_table
+from libs.misc import take, map_, xor_s
 
 
 def init_perm_b(plaintext):
